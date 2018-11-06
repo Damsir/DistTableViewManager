@@ -1,6 +1,6 @@
 //
-// DistTableViewCellStyle.m
-// DistTableViewManager
+// RETableViewCellStyle.m
+// RETableViewManager
 //
 // Copyright (c) 2013 Roman Efimov (https://github.com/romaonthego)
 //
@@ -23,9 +23,9 @@
 // THE SOFTWARE.
 //
 
-#import "DistTableViewCellStyle.h"
+#import "RETableViewCellStyle.h"
 
-@implementation DistTableViewCellStyle
+@implementation RETableViewCellStyle
 
 - (id)init
 {
@@ -43,7 +43,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    DistTableViewCellStyle *style = [[self class] allocWithZone:zone];
+    RETableViewCellStyle *style = [[self class] allocWithZone:zone];
     if (style) {
         style.backgroundImages = [NSMutableDictionary dictionaryWithDictionary:[self.backgroundImages copyWithZone:zone]];
         style.selectedBackgroundImages = [NSMutableDictionary dictionaryWithDictionary:[self.selectedBackgroundImages copyWithZone:zone]];
@@ -57,18 +57,18 @@
 
 - (BOOL)hasCustomBackgroundImage
 {
-    return [self backgroundImageForCellType:DistTableViewCellTypeAny] || [self backgroundImageForCellType:DistTableViewCellTypeFirst] || [self backgroundImageForCellType:DistTableViewCellTypeMiddle] || [self backgroundImageForCellType:DistTableViewCellTypeLast] || [self backgroundImageForCellType:DistTableViewCellTypeSingle];
+    return [self backgroundImageForCellType:RETableViewCellTypeAny] || [self backgroundImageForCellType:RETableViewCellTypeFirst] || [self backgroundImageForCellType:RETableViewCellTypeMiddle] || [self backgroundImageForCellType:RETableViewCellTypeLast] || [self backgroundImageForCellType:RETableViewCellTypeSingle];
 }
 
-- (UIImage *)backgroundImageForCellType:(DistTableViewCellType)cellType
+- (UIImage *)backgroundImageForCellType:(RETableViewCellType)cellType
 {
     UIImage *image = self.backgroundImages[@(cellType)];
-    if (!image && cellType != DistTableViewCellTypeAny)
-        image = self.backgroundImages[@(DistTableViewCellTypeAny)];
+    if (!image && cellType != RETableViewCellTypeAny)
+        image = self.backgroundImages[@(RETableViewCellTypeAny)];
     return image;
 }
 
-- (void)setBackgroundImage:(UIImage *)image forCellType:(DistTableViewCellType)cellType
+- (void)setBackgroundImage:(UIImage *)image forCellType:(RETableViewCellType)cellType
 {
     if (image)
         [self.backgroundImages setObject:image forKey:@(cellType)];
@@ -76,18 +76,18 @@
 
 - (BOOL)hasCustomSelectedBackgroundImage
 {
-    return [self selectedBackgroundImageForCellType:DistTableViewCellTypeAny] ||[self selectedBackgroundImageForCellType:DistTableViewCellTypeFirst] || [self selectedBackgroundImageForCellType:DistTableViewCellTypeMiddle] || [self selectedBackgroundImageForCellType:DistTableViewCellTypeLast] || [self selectedBackgroundImageForCellType:DistTableViewCellTypeSingle];
+    return [self selectedBackgroundImageForCellType:RETableViewCellTypeAny] ||[self selectedBackgroundImageForCellType:RETableViewCellTypeFirst] || [self selectedBackgroundImageForCellType:RETableViewCellTypeMiddle] || [self selectedBackgroundImageForCellType:RETableViewCellTypeLast] || [self selectedBackgroundImageForCellType:RETableViewCellTypeSingle];
 }
 
-- (UIImage *)selectedBackgroundImageForCellType:(DistTableViewCellType)cellType
+- (UIImage *)selectedBackgroundImageForCellType:(RETableViewCellType)cellType
 {
     UIImage *image = self.selectedBackgroundImages[@(cellType)];
-    if (!image && cellType != DistTableViewCellTypeAny)
-        image = self.selectedBackgroundImages[@(DistTableViewCellTypeAny)];
+    if (!image && cellType != RETableViewCellTypeAny)
+        image = self.selectedBackgroundImages[@(RETableViewCellTypeAny)];
     return image;
 }
 
-- (void)setSelectedBackgroundImage:(UIImage *)image forCellType:(DistTableViewCellType)cellType
+- (void)setSelectedBackgroundImage:(UIImage *)image forCellType:(RETableViewCellType)cellType
 {
     if (image)
         [self.selectedBackgroundImages setObject:image forKey:@(cellType)];

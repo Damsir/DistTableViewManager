@@ -1,6 +1,6 @@
 //
-// DistTableViewItem.m
-// DistTableViewManager
+// RETableViewItem.m
+// RETableViewManager
 //
 // Copyright (c) 2013 Roman Efimov (https://github.com/romaonthego)
 //
@@ -23,12 +23,12 @@
 // THE SOFTWARE.
 //
 
-#import "DistTableViewItem.h"
-#import "DistTableViewManager.h"
-#import "DistTableViewSection.h"
+#import "RETableViewItem.h"
+#import "RETableViewManager.h"
+#import "RETableViewSection.h"
 
 
-@implementation DistTableViewItem
+@implementation RETableViewItem
 
 + (instancetype)item
 {
@@ -40,12 +40,12 @@
     return [[self alloc] initWithTitle:title];
 }
 
-+ (instancetype)itemWithTitle:(NSString *)title accessoryType:(UITableViewCellAccessoryType)accessoryType selectionHandler:(void(^)(DistTableViewItem *item))selectionHandler
++ (instancetype)itemWithTitle:(NSString *)title accessoryType:(UITableViewCellAccessoryType)accessoryType selectionHandler:(void(^)(RETableViewItem *item))selectionHandler
 {
     return [[self alloc] initWithTitle:title accessoryType:accessoryType selectionHandler:selectionHandler accessoryButtonTapHandler:nil];
 }
 
-+ (instancetype)itemWithTitle:(NSString *)title accessoryType:(UITableViewCellAccessoryType)accessoryType selectionHandler:(void(^)(DistTableViewItem *item))selectionHandler accessoryButtonTapHandler:(void(^)(DistTableViewItem *item))accessoryButtonTapHandler
++ (instancetype)itemWithTitle:(NSString *)title accessoryType:(UITableViewCellAccessoryType)accessoryType selectionHandler:(void(^)(RETableViewItem *item))selectionHandler accessoryButtonTapHandler:(void(^)(RETableViewItem *item))accessoryButtonTapHandler
 {
     return [[self alloc] initWithTitle:title accessoryType:accessoryType selectionHandler:selectionHandler accessoryButtonTapHandler:accessoryButtonTapHandler];
 }
@@ -61,12 +61,12 @@
     return self;
 }
 
-- (id)initWithTitle:(NSString *)title accessoryType:(UITableViewCellAccessoryType)accessoryType selectionHandler:(void(^)(DistTableViewItem *item))selectionHandler
+- (id)initWithTitle:(NSString *)title accessoryType:(UITableViewCellAccessoryType)accessoryType selectionHandler:(void(^)(RETableViewItem *item))selectionHandler
 {
     return [self initWithTitle:title accessoryType:accessoryType selectionHandler:selectionHandler accessoryButtonTapHandler:nil];
 }
 
-- (id)initWithTitle:(NSString *)title accessoryType:(UITableViewCellAccessoryType)accessoryType selectionHandler:(void(^)(DistTableViewItem *item))selectionHandler accessoryButtonTapHandler:(void(^)(DistTableViewItem *item))accessoryButtonTapHandler
+- (id)initWithTitle:(NSString *)title accessoryType:(UITableViewCellAccessoryType)accessoryType selectionHandler:(void(^)(RETableViewItem *item))selectionHandler accessoryButtonTapHandler:(void(^)(RETableViewItem *item))accessoryButtonTapHandler
 {
     self = [self init];
     if (!self)
@@ -123,7 +123,7 @@
 
 - (void)deleteRowWithAnimation:(UITableViewRowAnimation)animation
 {
-    DistTableViewSection *section = self.section;
+    RETableViewSection *section = self.section;
     NSInteger row = self.indexPath.row;
     [section removeItemAtIndex:self.indexPath.row];
     [section.tableViewManager.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:row inSection:section.index]] withRowAnimation:animation];

@@ -1,6 +1,6 @@
 //
-// DistTableViewManager.m
-// DistTableViewManager
+// RETableViewManager.m
+// RETableViewManager
 //
 // Copyright (c) 2013 Roman Efimov (https://github.com/romaonthego)
 //
@@ -23,9 +23,9 @@
 // THE SOFTWARE.
 //
 
-#import "DistTableViewManager.h"
+#import "RETableViewManager.h"
 
-@interface DistTableViewManager ()
+@interface RETableViewManager ()
 
 /**
  The array of pairs of items / cell classes.
@@ -36,7 +36,7 @@
 
 @end
 
-@implementation DistTableViewManager
+@implementation RETableViewManager
 
 + (void)initialize
 {
@@ -57,7 +57,7 @@
     return nil;
 }
 
-- (id)initWithTableView:(UITableView *)tableView delegate:(id<DistTableViewManagerDelegate>)delegate
+- (id)initWithTableView:(UITableView *)tableView delegate:(id<RETableViewManagerDelegate>)delegate
 {
     self = [self initWithTableView:tableView];
     if (!self)
@@ -82,7 +82,7 @@
     self.mutableSections = [[NSMutableArray alloc] init];
     self.registeredClasses = [[NSMutableDictionary alloc] init];
     self.registeredXIBs = [[NSMutableDictionary alloc] init];
-    self.style = [[DistTableViewCellStyle alloc] init];
+    self.style = [[RETableViewCellStyle alloc] init];
     
     [self registerDefaultClasses];
     
@@ -134,7 +134,7 @@
 
 - (Class)classForCellAtIndexPath:(NSIndexPath *)indexPath
 {
-    DistTableViewSection *section = self.mutableSections[indexPath.section];
+    RETableViewSection *section = self.mutableSections[indexPath.section];
     NSObject *item = section.items[indexPath.row];
     return self.registeredClasses[item.class];
 }
@@ -162,19 +162,19 @@
     if (self.mutableSections.count <= sectionIndex) {
         return 0;
     }
-    return ((DistTableViewSection *)self.mutableSections[sectionIndex]).items.count;
+    return ((RETableViewSection *)self.mutableSections[sectionIndex]).items.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DistTableViewSection *section = self.mutableSections[indexPath.section];
-    DistTableViewItem *item = section.items[indexPath.row];
+    RETableViewSection *section = self.mutableSections[indexPath.section];
+    RETableViewItem *item = section.items[indexPath.row];
     
     UITableViewCellStyle cellStyle = UITableViewCellStyleDefault;
-    if ([item isKindOfClass:[DistTableViewItem class]])
-        cellStyle = ((DistTableViewItem *)item).style;
+    if ([item isKindOfClass:[RETableViewItem class]])
+        cellStyle = ((RETableViewItem *)item).style;
     
-    NSString *cellIdentifier = [NSString stringWithFormat:@"DistTableViewManager_%@_%li", [item class], (long) cellStyle];
+    NSString *cellIdentifier = [NSString stringWithFormat:@"RETableViewManager_%@_%li", [item class], (long) cellStyle];
     
     Class cellClass = [self classForCellAtIndexPath:indexPath];
     
@@ -186,21 +186,21 @@
         cellIdentifier = item.cellIdentifier;
     }
     
-    DistTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    RETableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    void (^loadCell)(DistTableViewCell *cell) = ^(DistTableViewCell *cell) {
+    void (^loadCell)(RETableViewCell *cell) = ^(RETableViewCell *cell) {
         cell.tableViewManager = self;
         
-        // DistTableViewManagerDelegate
+        // RETableViewManagerDelegate
         //
-        if ([self.delegate conformsToProtocol:@protocol(DistTableViewManagerDelegate)] && [self.delegate respondsToSelector:@selector(tableView:willLoadCell:forRowAtIndexPath:)])
+        if ([self.delegate conformsToProtocol:@protocol(RETableViewManagerDelegate)] && [self.delegate respondsToSelector:@selector(tableView:willLoadCell:forRowAtIndexPath:)])
             [self.delegate tableView:tableView willLoadCell:cell forRowAtIndexPath:indexPath];
         
         [cell cellDidLoad];
         
-        // DistTableViewManagerDelegate
+        // RETableViewManagerDelegate
         //
-        if ([self.delegate conformsToProtocol:@protocol(DistTableViewManagerDelegate)] && [self.delegate respondsToSelector:@selector(tableView:didLoadCell:forRowAtIndexPath:)])
+        if ([self.delegate conformsToProtocol:@protocol(RETableViewManagerDelegate)] && [self.delegate respondsToSelector:@selector(tableView:didLoadCell:forRowAtIndexPath:)])
             [self.delegate tableView:tableView didLoadCell:cell forRowAtIndexPath:indexPath];
     };
     
@@ -210,7 +210,7 @@
         loadCell(cell);
     }
     
-    if ([cell isKindOfClass:[DistTableViewCell class]] && [cell respondsToSelector:@selector(loaded)] && !cell.loaded) {
+    if ([cell isKindOfClass:[RETableViewCell class]] && [cell respondsToSelector:@selector(loaded)] && !cell.loaded) {
         loadCell(cell);
     }
     
@@ -221,8 +221,8 @@
     cell.item = item;
     cell.detailTextLabel.text = nil;
     
-    if ([item isKindOfClass:[DistTableViewItem class]])
-        cell.detailTextLabel.text = ((DistTableViewItem *)item).detailLabelText;
+    if ([item isKindOfClass:[RETableViewItem class]])
+        cell.detailTextLabel.text = ((RETableViewItem *)item).detailLabelText;
     
     [cell cellWillAppear];
     
@@ -232,14 +232,14 @@
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
     NSMutableArray *titles;
-    for (DistTableViewSection *section in self.mutableSections) {
+    for (RETableViewSection *section in self.mutableSections) {
         if (section.indexTitle) {
             titles = [NSMutableArray array];
             break;
         }
     }
     if (titles) {
-        for (DistTableViewSection *section in self.mutableSections) {
+        for (RETableViewSection *section in self.mutableSections) {
             [titles addObject:section.indexTitle ? section.indexTitle : @""];
         }
     }
@@ -252,7 +252,7 @@
     if (self.mutableSections.count <= sectionIndex) {
         return nil;
     }
-    DistTableViewSection *section = self.mutableSections[sectionIndex];
+    RETableViewSection *section = self.mutableSections[sectionIndex];
     return section.headerTitle;
 }
 
@@ -261,17 +261,17 @@
     if (self.mutableSections.count <= sectionIndex) {
         return nil;
     }
-    DistTableViewSection *section = self.mutableSections[sectionIndex];
+    RETableViewSection *section = self.mutableSections[sectionIndex];
     return section.footerTitle;
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
 {
-    DistTableViewSection *sourceSection = self.mutableSections[sourceIndexPath.section];
-    DistTableViewItem *item = sourceSection.items[sourceIndexPath.row];
+    RETableViewSection *sourceSection = self.mutableSections[sourceIndexPath.section];
+    RETableViewItem *item = sourceSection.items[sourceIndexPath.row];
     [sourceSection removeItemAtIndex:sourceIndexPath.row];
     
-    DistTableViewSection *destinationSection = self.mutableSections[destinationIndexPath.section];
+    RETableViewSection *destinationSection = self.mutableSections[destinationIndexPath.section];
     [destinationSection insertItem:item atIndex:destinationIndexPath.row];
     
     if (item.moveCompletionHandler)
@@ -283,18 +283,18 @@
     if (self.mutableSections.count <= indexPath.section) {
         return NO;
     }
-    DistTableViewSection *section = self.mutableSections[indexPath.section];
-    DistTableViewItem *item = section.items[indexPath.row];
+    RETableViewSection *section = self.mutableSections[indexPath.section];
+    RETableViewItem *item = section.items[indexPath.row];
     return item.moveHandler != nil;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section < [self.mutableSections count]) {
-        DistTableViewSection *section = self.mutableSections[indexPath.section];
+        RETableViewSection *section = self.mutableSections[indexPath.section];
         if (indexPath.row < [section.items count]) {
-            DistTableViewItem *item = section.items[indexPath.row];
-            if ([item isKindOfClass:[DistTableViewItem class]]) {
+            RETableViewItem *item = section.items[indexPath.row];
+            if ([item isKindOfClass:[RETableViewItem class]]) {
                 return item.editingStyle != UITableViewCellEditingStyleNone || item.moveHandler;
             }
         }
@@ -306,16 +306,16 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        DistTableViewSection *section = self.mutableSections[indexPath.section];
-        DistTableViewItem *item = section.items[indexPath.row];
+        RETableViewSection *section = self.mutableSections[indexPath.section];
+        RETableViewItem *item = section.items[indexPath.row];
         if (item.deletionHandlerWithCompletion) {
             item.deletionHandlerWithCompletion(item, ^{
                 [section removeItemAtIndex:indexPath.row];
                 [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
                 
                 for (NSInteger i = indexPath.row; i < section.items.count; i++) {
-                    DistTableViewItem *afterItem = [[section items] objectAtIndex:i];
-                    DistTableViewCell *cell = (DistTableViewCell *)[tableView cellForRowAtIndexPath:afterItem.indexPath];
+                    RETableViewItem *afterItem = [[section items] objectAtIndex:i];
+                    RETableViewCell *cell = (RETableViewCell *)[tableView cellForRowAtIndexPath:afterItem.indexPath];
                     cell.rowIndex--;
                 }
             });
@@ -326,16 +326,16 @@
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             
             for (NSInteger i = indexPath.row; i < section.items.count; i++) {
-                DistTableViewItem *afterItem = [[section items] objectAtIndex:i];
-                DistTableViewCell *cell = (DistTableViewCell *)[tableView cellForRowAtIndexPath:afterItem.indexPath];
+                RETableViewItem *afterItem = [[section items] objectAtIndex:i];
+                RETableViewCell *cell = (RETableViewCell *)[tableView cellForRowAtIndexPath:afterItem.indexPath];
                 cell.rowIndex--;
             }
         }
     }
     
     if (editingStyle == UITableViewCellEditingStyleInsert) {
-        DistTableViewSection *section = self.mutableSections[indexPath.section];
-        DistTableViewItem *item = section.items[indexPath.row];
+        RETableViewSection *section = self.mutableSections[indexPath.section];
+        RETableViewItem *item = section.items[indexPath.row];
         if (item.insertionHandler)
             item.insertionHandler(item);
     }
@@ -372,8 +372,8 @@
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    if ([cell isKindOfClass:[DistTableViewCell class]])
-        [(DistTableViewCell *)cell cellDidDisappear];
+    if ([cell isKindOfClass:[RETableViewCell class]])
+        [(RETableViewCell *)cell cellDidDisappear];
     
     // Forward to UITableView delegate
     //
@@ -401,7 +401,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DistTableViewSection *section = self.mutableSections[indexPath.section];
+    RETableViewSection *section = self.mutableSections[indexPath.section];
     id item = section.items[indexPath.row];
     
     // Forward to UITableView delegate
@@ -415,11 +415,11 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)sectionIndex
 {
     if (self.mutableSections.count <= sectionIndex) {
-        return 0.1;
+        return 0.01;
     }
-    DistTableViewSection *section = self.mutableSections[sectionIndex];
+    RETableViewSection *section = self.mutableSections[sectionIndex];
     
-    if (section.headerHeight != DistTableViewSectionHeaderHeightAutomatic) {
+    if (section.headerHeight != RETableViewSectionHeaderHeightAutomatic) {
         return section.headerHeight;
     }
     
@@ -432,7 +432,7 @@
             CGFloat headerHeight = 0;
             CGFloat headerWidth = CGRectGetWidth(CGRectIntegral(tableView.bounds)) - 40.0f; // 40 = 20pt horizontal padding on each side
         
-            CGSize headerRect = CGSizeMake(headerWidth, DistTableViewSectionHeaderHeightAutomatic);
+            CGSize headerRect = CGSizeMake(headerWidth, RETableViewSectionHeaderHeightAutomatic);
         
             CGRect headerFrame = [section.headerTitle boundingRectWithSize:headerRect
                                                                    options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
@@ -449,17 +449,17 @@
     //
     if ([self.delegate conformsToProtocol:@protocol(UITableViewDelegate)] && [self.delegate respondsToSelector:@selector(tableView:heightForHeaderInSection:)])
         return [self.delegate tableView:tableView heightForHeaderInSection:sectionIndex];
-    return 0.1;
+    return 0.01;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)sectionIndex
 {
     if (self.mutableSections.count <= sectionIndex) {
-        return 0.1;
+        return 0.01;
     }
-    DistTableViewSection *section = self.mutableSections[sectionIndex];
+    RETableViewSection *section = self.mutableSections[sectionIndex];
     
-    if (section.footerHeight != DistTableViewSectionFooterHeightAutomatic) {
+    if (section.footerHeight != RETableViewSectionFooterHeightAutomatic) {
         return section.footerHeight;
     }
     
@@ -472,7 +472,7 @@
             CGFloat footerHeight = 0;
             CGFloat footerWidth = CGRectGetWidth(CGRectIntegral(tableView.bounds)) - 40.0f; // 40 = 20pt horizontal padding on each side
         
-            CGSize footerRect = CGSizeMake(footerWidth, DistTableViewSectionFooterHeightAutomatic);
+            CGSize footerRect = CGSizeMake(footerWidth, RETableViewSectionFooterHeightAutomatic);
         
             CGRect footerFrame = [section.footerTitle boundingRectWithSize:footerRect
                                                                    options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
@@ -490,7 +490,7 @@
     if ([self.delegate conformsToProtocol:@protocol(UITableViewDelegate)] && [self.delegate respondsToSelector:@selector(tableView:heightForFooterInSection:)])
         return [self.delegate tableView:tableView heightForFooterInSection:sectionIndex];
     
-    return 0.1;
+    return 0.01;
 }
 
 // Estimated height support
@@ -500,7 +500,7 @@
     if (self.mutableSections.count <= indexPath.section) {
         return 0.1;
     }
-    DistTableViewSection *section = self.mutableSections[indexPath.section];
+    RETableViewSection *section = self.mutableSections[indexPath.section];
 
     id item = section.items[indexPath.row];
     
@@ -521,7 +521,7 @@
     if (self.mutableSections.count <= sectionIndex) {
         return nil;
     }
-    DistTableViewSection *section = self.mutableSections[sectionIndex];
+    RETableViewSection *section = self.mutableSections[sectionIndex];
     
     // Forward to UITableView delegate
     //
@@ -536,7 +536,7 @@
     if (self.mutableSections.count <= sectionIndex) {
         return nil;
     }
-    DistTableViewSection *section = self.mutableSections[sectionIndex];
+    RETableViewSection *section = self.mutableSections[sectionIndex];
     
     // Forward to UITableView delegate
     //
@@ -550,10 +550,10 @@
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-    DistTableViewSection *section = self.mutableSections[indexPath.section];
+    RETableViewSection *section = self.mutableSections[indexPath.section];
     id item = section.items[indexPath.row];
     if ([item respondsToSelector:@selector(setAccessoryButtonTapHandler:)]) {
-        DistTableViewItem *actionItem = (DistTableViewItem *)item;
+        RETableViewItem *actionItem = (RETableViewItem *)item;
         if (actionItem.accessoryButtonTapHandler)
             actionItem.accessoryButtonTapHandler(item);
     }
@@ -614,10 +614,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DistTableViewSection *section = self.mutableSections[indexPath.section];
+    RETableViewSection *section = self.mutableSections[indexPath.section];
     id item = section.items[indexPath.row];
     if ([item respondsToSelector:@selector(setSelectionHandler:)]) {
-        DistTableViewItem *actionItem = (DistTableViewItem *)item;
+        RETableViewItem *actionItem = (RETableViewItem *)item;
         if (actionItem.selectionHandler)
             actionItem.selectionHandler(item);
     }
@@ -640,10 +640,10 @@
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DistTableViewSection *section = self.mutableSections[indexPath.section];
-    DistTableViewItem *item = section.items[indexPath.row];
+    RETableViewSection *section = self.mutableSections[indexPath.section];
+    RETableViewItem *item = section.items[indexPath.row];
     
-    if (![item isKindOfClass:[DistTableViewItem class]])
+    if (![item isKindOfClass:[RETableViewItem class]])
         return UITableViewCellEditingStyleNone;
     
     // Forward to UITableView delegate
@@ -694,8 +694,8 @@
 
 - (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath
 {
-    DistTableViewSection *sourceSection = self.mutableSections[sourceIndexPath.section];
-    DistTableViewItem *item = sourceSection.items[sourceIndexPath.row];
+    RETableViewSection *sourceSection = self.mutableSections[sourceIndexPath.section];
+    RETableViewItem *item = sourceSection.items[sourceIndexPath.row];
     if (item.moveHandler) {
         BOOL allowed = item.moveHandler(item, sourceIndexPath, proposedDestinationIndexPath);
         if (!allowed)
@@ -726,10 +726,10 @@
 
 - (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DistTableViewSection *section = self.mutableSections[indexPath.section];
+    RETableViewSection *section = self.mutableSections[indexPath.section];
     id anItem = section.items[indexPath.row];
     if ([anItem respondsToSelector:@selector(setCopyHandler:)]) {
-        DistTableViewItem *item = anItem;
+        RETableViewItem *item = anItem;
         if (item.copyHandler || item.pasteHandler)
             return YES;
     }
@@ -744,10 +744,10 @@
 
 - (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
 {
-    DistTableViewSection *section = self.mutableSections[indexPath.section];
+    RETableViewSection *section = self.mutableSections[indexPath.section];
     id anItem = section.items[indexPath.row];
     if ([anItem respondsToSelector:@selector(setCopyHandler:)]) {
-        DistTableViewItem *item = anItem;
+        RETableViewItem *item = anItem;
         if (item.copyHandler && action == @selector(copy:))
             return YES;
         
@@ -768,8 +768,8 @@
 
 - (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
 {
-    DistTableViewSection *section = self.mutableSections[indexPath.section];
-    DistTableViewItem *item = section.items[indexPath.row];
+    RETableViewSection *section = self.mutableSections[indexPath.section];
+    RETableViewItem *item = section.items[indexPath.row];
     
 	if (action == @selector(copy:)) {
 		if (item.copyHandler)
@@ -905,7 +905,7 @@
 #pragma mark -
 #pragma mark Managing sections
 
-- (void)addSection:(DistTableViewSection *)section
+- (void)addSection:(RETableViewSection *)section
 {
     section.tableViewManager = self;
     [self.mutableSections addObject:section];
@@ -913,12 +913,12 @@
 
 - (void)addSectionsFromArray:(NSArray *)array
 {
-    for (DistTableViewSection *section in array)
+    for (RETableViewSection *section in array)
         section.tableViewManager = self;
     [self.mutableSections addObjectsFromArray:array];
 }
 
-- (void)insertSection:(DistTableViewSection *)section atIndex:(NSUInteger)index
+- (void)insertSection:(RETableViewSection *)section atIndex:(NSUInteger)index
 {
     section.tableViewManager = self;
     [self.mutableSections insertObject:section atIndex:index];
@@ -926,12 +926,12 @@
 
 - (void)insertSections:(NSArray *)sections atIndexes:(NSIndexSet *)indexes
 {
-    for (DistTableViewSection *section in sections)
+    for (RETableViewSection *section in sections)
         section.tableViewManager = self;
     [self.mutableSections insertObjects:sections atIndexes:indexes];
 }
 
-- (void)removeSection:(DistTableViewSection *)section
+- (void)removeSection:(RETableViewSection *)section
 {
     [self.mutableSections removeObject:section];
 }
@@ -941,12 +941,12 @@
     [self.mutableSections removeAllObjects];
 }
 
-- (void)removeSectionIdenticalTo:(DistTableViewSection *)section inRange:(NSRange)range
+- (void)removeSectionIdenticalTo:(RETableViewSection *)section inRange:(NSRange)range
 {
     [self.mutableSections removeObjectIdenticalTo:section inRange:range];
 }
 
-- (void)removeSectionIdenticalTo:(DistTableViewSection *)section
+- (void)removeSectionIdenticalTo:(RETableViewSection *)section
 {
     [self.mutableSections removeObjectIdenticalTo:section];
 }
@@ -961,7 +961,7 @@
     [self.mutableSections removeObjectsInRange:range];
 }
 
-- (void)removeSection:(DistTableViewSection *)section inRange:(NSRange)range
+- (void)removeSection:(RETableViewSection *)section inRange:(NSRange)range
 {
     [self.mutableSections removeObject:section inRange:range];
 }
@@ -981,7 +981,7 @@
     [self.mutableSections removeObjectsAtIndexes:indexes];
 }
 
-- (void)replaceSectionAtIndex:(NSUInteger)index withSection:(DistTableViewSection *)section
+- (void)replaceSectionAtIndex:(NSUInteger)index withSection:(RETableViewSection *)section
 {
     section.tableViewManager = self;
     [self.mutableSections replaceObjectAtIndex:index withObject:section];
@@ -995,14 +995,14 @@
 
 - (void)replaceSectionsAtIndexes:(NSIndexSet *)indexes withSections:(NSArray *)sections
 {
-    for (DistTableViewSection *section in sections)
+    for (RETableViewSection *section in sections)
         section.tableViewManager = self;
     [self.mutableSections replaceObjectsAtIndexes:indexes withObjects:sections];
 }
 
 - (void)replaceSectionsInRange:(NSRange)range withSectionsFromArray:(NSArray *)otherArray range:(NSRange)otherRange
 {
-    for (DistTableViewSection *section in otherArray)
+    for (RETableViewSection *section in otherArray)
         section.tableViewManager = self;
     [self.mutableSections replaceObjectsInRange:range withObjectsFromArray:otherArray range:otherRange];
 }
@@ -1033,7 +1033,7 @@
 - (NSArray *)errors
 {
     NSMutableArray *errors;
-    for (DistTableViewSection *section in self.mutableSections) {
+    for (RETableViewSection *section in self.mutableSections) {
         NSArray *sectionErrors = section.errors;
         if (sectionErrors) {
             if (!errors) {

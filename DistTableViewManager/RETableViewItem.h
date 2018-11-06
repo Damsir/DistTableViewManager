@@ -1,6 +1,6 @@
 //
-// DistTableViewItem.h
-// DistTableViewManager
+// RETableViewItem.h
+// RETableViewManager
 //
 // Copyright (c) 2013 Roman Efimov (https://github.com/romaonthego)
 //
@@ -24,17 +24,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DistTableViewCellStyle.h"
+#import "RETableViewCellStyle.h"
 
-@class DistTableViewSection;
+@class RETableViewSection;
 
-@interface DistTableViewItem : NSObject
+@interface RETableViewItem : NSObject
 
 @property (copy, readwrite, nonatomic) NSString *title;
 @property (strong, readwrite, nonatomic) UIImage *image;
 @property (strong, readwrite, nonatomic) UIImage *highlightedImage;
 @property (assign, readwrite, nonatomic) NSTextAlignment textAlignment;
-@property (weak, readwrite, nonatomic) DistTableViewSection *section;
+@property (weak, readwrite, nonatomic) RETableViewSection *section;
 @property (copy, readwrite, nonatomic) NSString *detailLabelText;
 @property (assign, readwrite, nonatomic) UITableViewCellStyle style;
 @property (assign, readwrite, nonatomic) UITableViewCellSelectionStyle selectionStyle;
@@ -68,12 +68,12 @@
 
 + (instancetype)item;
 + (instancetype)itemWithTitle:(NSString *)title;
-+ (instancetype)itemWithTitle:(NSString *)title accessoryType:(UITableViewCellAccessoryType)accessoryType selectionHandler:(void(^)(DistTableViewItem *item))selectionHandler;
-+ (instancetype)itemWithTitle:(NSString *)title accessoryType:(UITableViewCellAccessoryType)accessoryType selectionHandler:(void(^)(DistTableViewItem *item))selectionHandler accessoryButtonTapHandler:(void(^)(DistTableViewItem *item))accessoryButtonTapHandler;
++ (instancetype)itemWithTitle:(NSString *)title accessoryType:(UITableViewCellAccessoryType)accessoryType selectionHandler:(void(^)(RETableViewItem *item))selectionHandler;
++ (instancetype)itemWithTitle:(NSString *)title accessoryType:(UITableViewCellAccessoryType)accessoryType selectionHandler:(void(^)(RETableViewItem *item))selectionHandler accessoryButtonTapHandler:(void(^)(RETableViewItem *item))accessoryButtonTapHandler;
 
 - (id)initWithTitle:(NSString *)title;
-- (id)initWithTitle:(NSString *)title accessoryType:(UITableViewCellAccessoryType)accessoryType selectionHandler:(void(^)(DistTableViewItem *item))selectionHandler;
-- (id)initWithTitle:(NSString *)title accessoryType:(UITableViewCellAccessoryType)accessoryType selectionHandler:(void(^)(DistTableViewItem *item))selectionHandler accessoryButtonTapHandler:(void(^)(DistTableViewItem *item))accessoryButtonTapHandler;
+- (id)initWithTitle:(NSString *)title accessoryType:(UITableViewCellAccessoryType)accessoryType selectionHandler:(void(^)(RETableViewItem *item))selectionHandler;
+- (id)initWithTitle:(NSString *)title accessoryType:(UITableViewCellAccessoryType)accessoryType selectionHandler:(void(^)(RETableViewItem *item))selectionHandler accessoryButtonTapHandler:(void(^)(RETableViewItem *item))accessoryButtonTapHandler;
 
 - (NSIndexPath *)indexPath;
 

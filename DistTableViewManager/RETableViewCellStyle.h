@@ -1,6 +1,6 @@
 //
-// DistTableViewCellStyle.h
-// DistTableViewManager
+// RETableViewCellStyle.h
+// RETableViewManager
 //
 // Copyright (c) 2013 Roman Efimov (https://github.com/romaonthego)
 //
@@ -24,9 +24,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DistTableViewCell.h"
+#import "RETableViewCell.h"
 
-@interface DistTableViewCellStyle : NSObject <NSCopying>
+@interface RETableViewCellStyle : NSObject <NSCopying>
 
 @property (assign, readwrite, nonatomic) CGFloat cellHeight;
 @property (assign, readwrite, nonatomic) UITableViewCellSelectionStyle defaultCellSelectionStyle;
@@ -36,11 +36,11 @@
 @property (strong, readwrite, nonatomic) NSMutableDictionary *selectedBackgroundImages;
 
 - (BOOL)hasCustomBackgroundImage;
-- (UIImage *)backgroundImageForCellType:(DistTableViewCellType)cellType;
-- (void)setBackgroundImage:(UIImage *)image forCellType:(DistTableViewCellType)cellType;
+- (UIImage *)backgroundImageForCellType:(RETableViewCellType)cellType;
+- (void)setBackgroundImage:(UIImage *)image forCellType:(RETableViewCellType)cellType;
 
 - (BOOL)hasCustomSelectedBackgroundImage;
-- (UIImage *)selectedBackgroundImageForCellType:(DistTableViewCellType)cellType;
-- (void)setSelectedBackgroundImage:(UIImage *)image forCellType:(DistTableViewCellType)cellType;
+- (UIImage *)selectedBackgroundImageForCellType:(RETableViewCellType)cellType;
+- (void)setSelectedBackgroundImage:(UIImage *)image forCellType:(RETableViewCellType)cellType;
 
 @end

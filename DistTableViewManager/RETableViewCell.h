@@ -1,6 +1,6 @@
 //
-// DistTableViewCell.h
-// DistTableViewManager
+// RETableViewCell.h
+// RETableViewManager
 //
 // Copyright (c) 2013 Roman Efimov (https://github.com/romaonthego)
 //
@@ -26,42 +26,42 @@
 #import <UIKit/UIKit.h>
 
 
-@class DistTableViewManager;
-@class DistTableViewSection;
-@class DistTableViewItem;
+@class RETableViewManager;
+@class RETableViewSection;
+@class RETableViewItem;
 
-typedef NS_ENUM(NSInteger, DistTableViewCellType) {
-    DistTableViewCellTypeFirst,
-    DistTableViewCellTypeMiddle,
-    DistTableViewCellTypeLast,
-    DistTableViewCellTypeSingle,
-    DistTableViewCellTypeAny
+typedef NS_ENUM(NSInteger, RETableViewCellType) {
+    RETableViewCellTypeFirst,
+    RETableViewCellTypeMiddle,
+    RETableViewCellTypeLast,
+    RETableViewCellTypeSingle,
+    RETableViewCellTypeAny
 };
 
 /**
- The `DistTableViewCell` class defines the attributes and behavior of the cells that appear in `UITableView` objects.
+ The `RETableViewCell` class defines the attributes and behavior of the cells that appear in `UITableView` objects.
  
  */
-@interface DistTableViewCell : UITableViewCell
+@interface RETableViewCell : UITableViewCell
 
 ///-----------------------------
 /// @name Accessing Table View and Table View Manager
 ///-----------------------------
 
 @property (weak, readwrite, nonatomic) UITableView *parentTableView;
-@property (weak, readwrite, nonatomic) DistTableViewManager *tableViewManager;
+@property (weak, readwrite, nonatomic) RETableViewManager *tableViewManager;
 
 ///-----------------------------
 /// @name Managing Cell Height
 ///-----------------------------
 
-+ (CGFloat)heightWithItem:(DistTableViewItem *)item tableViewManager:(DistTableViewManager *)tableViewManager;
++ (CGFloat)heightWithItem:(RETableViewItem *)item tableViewManager:(RETableViewManager *)tableViewManager;
 
 ///-----------------------------
 /// @name Working With Keyboard
 ///-----------------------------
 
-+ (BOOL)canFocusWithItem:(DistTableViewItem *)item;
++ (BOOL)canFocusWithItem:(RETableViewItem *)item;
 
 @property (strong, readonly, nonatomic) UIResponder *responder;
 @property (strong, readonly, nonatomic) NSIndexPath *indexPathForPreviousResponder;
@@ -84,9 +84,9 @@ typedef NS_ENUM(NSInteger, DistTableViewCellType) {
 
 @property (assign, readwrite, nonatomic) NSInteger rowIndex;
 @property (assign, readwrite, nonatomic) NSInteger sectionIndex;
-@property (weak, readwrite, nonatomic) DistTableViewSection *section;
-@property (strong, readwrite, nonatomic) DistTableViewItem *item;
-@property (assign, readonly, nonatomic) DistTableViewCellType type;
+@property (weak, readwrite, nonatomic) RETableViewSection *section;
+@property (strong, readwrite, nonatomic) RETableViewItem *item;
+@property (assign, readonly, nonatomic) RETableViewCellType type;
 
 ///-----------------------------
 /// @name Handling Cell Events

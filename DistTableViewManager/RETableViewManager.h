@@ -1,6 +1,6 @@
 //
-// DistTableViewManager.h
-// DistTableViewManager
+// RETableViewManager.h
+// RETableViewManager
 //
 // Copyright (c) 2013 Roman Efimov (https://github.com/romaonthego)
 //
@@ -25,49 +25,49 @@
 
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
-#import "DistTableViewSection.h"
-#import "DistTableViewCellStyle.h"
-#import "DistTableViewCell.h"
-#import "DistTableViewItem.h"
+#import "RETableViewSection.h"
+#import "RETableViewCellStyle.h"
+#import "RETableViewCell.h"
+#import "RETableViewItem.h"
 
 
-@protocol DistTableViewManagerDelegate;
+@protocol RETableViewManagerDelegate;
 
 /**
- `DistTableViewManager` allows to manage the content of any `UITableView` with ease, both forms and lists. `DistTableViewManager` is built on top of reusable cells technique and provides 
+ `RETableViewManager` allows to manage the content of any `UITableView` with ease, both forms and lists. `RETableViewManager` is built on top of reusable cells technique and provides
  APIs for mapping any object class to any custom cell subclass.
  
  The general idea is to allow developers to use their own `UITableView` and `UITableViewController` instances (and even subclasses), providing a layer that synchronizes data with the cell appereance.
  It fully implements `UITableViewDelegate` and `UITableViewDataSource` protocols so you don't have to.
  */
-@interface DistTableViewManager : NSObject <UITableViewDelegate, UITableViewDataSource>
+@interface RETableViewManager : NSObject <UITableViewDelegate, UITableViewDataSource>
 
 ///-----------------------------
 /// @name Managing Table View and Sections
 ///-----------------------------
 
 /**
- The array of sections. See DistTableViewSection reference for details.
+ The array of sections. See RETableViewSection reference for details.
  */
 @property (strong, readonly, nonatomic) NSArray *sections;
 
 /**
- The `UITableView` that needs to be managed using this `DistTableViewManager`.
+ The `UITableView` that needs to be managed using this `RETableViewManager`.
  */
 @property (weak, readwrite, nonatomic) UITableView *tableView;
 
 ///-----------------------------
-/// @name Creating and Initializing a DistTableViewManager
+/// @name Creating and Initializing a RETableViewManager
 ///-----------------------------
 
 /**
  Initialize a table view manager object for a specific `UITableView` and specify the delegate object.
  
  @param tableView The `UITableView` that needs to be managed.
- @param delegate The delegate (DistTableViewManagerDelegate) object for the table view manager.
+ @param delegate The delegate (RETableViewManagerDelegate) object for the table view manager.
  @return The pointer to the instance, or nil if initialization failed.
  */
-- (id)initWithTableView:(UITableView *)tableView delegate:(id<DistTableViewManagerDelegate>)delegate;
+- (id)initWithTableView:(UITableView *)tableView delegate:(id<RETableViewManagerDelegate>)delegate;
 
 /**
  Initialize a table view manager object for a specific `UITableView`.
@@ -84,7 +84,7 @@
 /**
  The object that acts as the delegate of the receiving table view.
  */
-@property (weak, readwrite, nonatomic) id<DistTableViewManagerDelegate> delegate;
+@property (weak, readwrite, nonatomic) id<RETableViewManagerDelegate> delegate;
 
 ///-----------------------------
 /// @name Managing Custom Cells
@@ -140,9 +140,9 @@
 ///-----------------------------
 
 /**
- The object that provides styling for `UITableView`. See DistTableViewCellStyle reference for details.
+ The object that provides styling for `UITableView`. See RETableViewCellStyle reference for details.
  */
-@property (strong, readwrite, nonatomic) DistTableViewCellStyle *style;
+@property (strong, readwrite, nonatomic) RETableViewCellStyle *style;
 
 ///-----------------------------
 /// @name Adding sections
@@ -153,7 +153,7 @@
  
  @param section The section to add to the end of the table view. This value must not be `nil`.
  */
-- (void)addSection:(DistTableViewSection *)section;
+- (void)addSection:(RETableViewSection *)section;
 
 /**
  Adds the sections contained in another given sections array to the end of the table view.
@@ -168,7 +168,7 @@
  @param section The section to add to the table view. This value must not be nil.
  @param index The index in the sections array at which to insert section. This value must not be greater than the count of sections in the table view.
  */
-- (void)insertSection:(DistTableViewSection *)section atIndex:(NSUInteger)index;
+- (void)insertSection:(RETableViewSection *)section atIndex:(NSUInteger)index;
 
 /**
  Inserts the sections in the provided array into the table view at the specified indexes.
@@ -187,7 +187,7 @@
  
  @param section The section to remove from the table view.
  */
-- (void)removeSection:(DistTableViewSection *)section;
+- (void)removeSection:(RETableViewSection *)section;
 
 /**
  Empties the table view of all its sections.
@@ -201,14 +201,14 @@
  @param section The section to remove from the table view within range.
  @param range The range in the table view from which to remove section.
  */
-- (void)removeSectionIdenticalTo:(DistTableViewSection *)section inRange:(NSRange)range;
+- (void)removeSectionIdenticalTo:(RETableViewSection *)section inRange:(NSRange)range;
 
 /**
  Removes all occurrences of a given section in the sections array.
  
  @param section The section to remove from the sections array.
  */
-- (void)removeSectionIdenticalTo:(DistTableViewSection *)section;
+- (void)removeSectionIdenticalTo:(RETableViewSection *)section;
 
 /**
  Removes from the table view the sections in another given array.
@@ -230,7 +230,7 @@
  @param section The section to remove from the table view.
  @param range The range from which to remove section.
  */
-- (void)removeSection:(DistTableViewSection *)section inRange:(NSRange)range;
+- (void)removeSection:(RETableViewSection *)section inRange:(NSRange)range;
 
 /**
  Removes the section with the highest-valued index in the table view.
@@ -262,7 +262,7 @@
  @param index The index of the section to be replaced. This value must not exceed the bounds of the table view sections.
  @param section The section with which to replace the section at index `index` in the sections array. This value must not be `nil`.
  */
-- (void)replaceSectionAtIndex:(NSUInteger)index withSection:(DistTableViewSection *)section;
+- (void)replaceSectionAtIndex:(NSUInteger)index withSection:(RETableViewSection *)section;
 
 /**
  Replaces the sections in the table view with all of the sections from a given array.
@@ -333,9 +333,9 @@
 
 
 /**
- The delegate of a `DistTableViewManager` object can adopt the `DistTableViewManagerDelegate` protocol. Optional methods of the protocol allow the delegate to manage cells.
+ The delegate of a `RETableViewManager` object can adopt the `RETableViewManagerDelegate` protocol. Optional methods of the protocol allow the delegate to manage cells.
  */
-@protocol DistTableViewManagerDelegate <UITableViewDelegate>
+@protocol RETableViewManagerDelegate <UITableViewDelegate>
 
 @optional
 

@@ -1,6 +1,6 @@
 //
-// DistTableViewSection.h
-// DistTableViewManager
+// RETableViewSection.h
+// RETableViewManager
 //
 // Copyright (c) 2013 Roman Efimov (https://github.com/romaonthego)
 //
@@ -26,16 +26,16 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class DistTableViewManager;
-@class DistTableViewCellStyle;
+@class RETableViewManager;
+@class RETableViewCellStyle;
 
-extern CGFloat const DistTableViewSectionHeaderHeightAutomatic;
-extern CGFloat const DistTableViewSectionFooterHeightAutomatic;
+extern CGFloat const RETableViewSectionHeaderHeightAutomatic;
+extern CGFloat const RETableViewSectionFooterHeightAutomatic;
 
 /**
  Table view section.
  */
-@interface DistTableViewSection : NSObject
+@interface RETableViewSection : NSObject
 
 /**
  An array of section items (rows).
@@ -75,7 +75,7 @@ extern CGFloat const DistTableViewSectionFooterHeightAutomatic;
 /**
  The table view manager of this section.
  */
-@property (weak, readwrite, nonatomic) DistTableViewManager *tableViewManager;
+@property (weak, readwrite, nonatomic) RETableViewManager *tableViewManager;
 
 /**
  Section index in UITableView.
@@ -101,7 +101,7 @@ extern CGFloat const DistTableViewSectionFooterHeightAutomatic;
 //- (CGFloat)maximumTitleWidthWithFont:(UIFont *)font;
 
 ///-----------------------------
-/// @name Creating and Initializing a DistTableViewSection
+/// @name Creating and Initializing a RETableViewSection
 ///-----------------------------
 
 /**
@@ -175,9 +175,9 @@ extern CGFloat const DistTableViewSectionFooterHeightAutomatic;
 ///-----------------------------
 
 /**
- The object that provides styling for the section. See DistTableViewCellStyle reference for details.
+ The object that provides styling for the section. See RETableViewCellStyle reference for details.
  */
-@property (strong, readwrite, nonatomic) DistTableViewCellStyle *style;
+@property (strong, readwrite, nonatomic) RETableViewCellStyle *style;
 
 ///-----------------------------
 /// @name Adding Items

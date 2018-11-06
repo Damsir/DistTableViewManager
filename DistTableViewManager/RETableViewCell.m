@@ -1,6 +1,6 @@
 //
-// DistTableViewCell.m
-// DistTableViewManager
+// RETableViewCell.m
+// RETableViewManager
 //
 // Copyright (c) 2013 Roman Efimov (https://github.com/romaonthego)
 //
@@ -23,13 +23,13 @@
 // THE SOFTWARE.
 //
 
-#import "DistTableViewCell.h"
-#import "DistTableViewManager.h"
-#import "DistTableViewSection.h"
-#import "DistTableViewItem.h"
+#import "RETableViewCell.h"
+#import "RETableViewManager.h"
+#import "RETableViewSection.h"
+#import "RETableViewItem.h"
 
 
-@interface DistTableViewCell ()
+@interface RETableViewCell ()
 
 @property (assign, readwrite, nonatomic) BOOL loaded;
 @property (strong, readwrite, nonatomic) UIImageView *backgroundImageView;
@@ -37,19 +37,19 @@
 
 @end
 
-@implementation DistTableViewCell
+@implementation RETableViewCell
 
-+ (BOOL)canFocusWithItem:(DistTableViewItem *)item
++ (BOOL)canFocusWithItem:(RETableViewItem *)item
 {
     return NO;
 }
 
-+ (CGFloat)heightWithItem:(DistTableViewItem *)item tableViewManager:(DistTableViewManager *)tableViewManager
++ (CGFloat)heightWithItem:(RETableViewItem *)item tableViewManager:(RETableViewManager *)tableViewManager
 {
-    if ([item isKindOfClass:[DistTableViewItem class]] && item.cellHeight > 0)
+    if ([item isKindOfClass:[RETableViewItem class]] && item.cellHeight > 0)
         return item.cellHeight;
     
-    if ([item isKindOfClass:[DistTableViewItem class]] && item.cellHeight == 0)
+    if ([item isKindOfClass:[RETableViewItem class]] && item.cellHeight == 0)
         return item.section.style.cellHeight;
     
     return tableViewManager.style.cellHeight;
@@ -104,7 +104,7 @@
         self.textLabel.backgroundColor = [UIColor clearColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
     } else {
-        DistTableViewItem *item = (DistTableViewItem *)self.item;
+        RETableViewItem *item = (RETableViewItem *)self.item;
         self.textLabel.text = item.title;
         self.textLabel.backgroundColor = [UIColor clearColor];
         self.accessoryType = item.accessoryType;
@@ -172,21 +172,21 @@
 }
 
 
-- (DistTableViewCellType)type
+- (RETableViewCellType)type
 {
     if (self.rowIndex == 0 && self.section.items.count == 1)
-        return DistTableViewCellTypeSingle;
+        return RETableViewCellTypeSingle;
     
     if (self.rowIndex == 0 && self.section.items.count > 1)
-        return DistTableViewCellTypeFirst;
+        return RETableViewCellTypeFirst;
     
     if (self.rowIndex > 0 && self.rowIndex < self.section.items.count - 1 && self.section.items.count > 2)
-        return DistTableViewCellTypeMiddle;
+        return RETableViewCellTypeMiddle;
     
     if (self.rowIndex == self.section.items.count - 1 && self.section.items.count > 1)
-        return DistTableViewCellTypeLast;
+        return RETableViewCellTypeLast;
     
-    return DistTableViewCellTypeAny;
+    return RETableViewCellTypeAny;
 }
 
 - (UIResponder *)responder
@@ -196,11 +196,11 @@
 
 - (NSIndexPath *)indexPathForPreviousResponderInSectionIndex:(NSUInteger)sectionIndex
 {
-    DistTableViewSection *section = self.tableViewManager.sections[sectionIndex];
+    RETableViewSection *section = self.tableViewManager.sections[sectionIndex];
     NSUInteger indexInSection =  [section isEqual:self.section] ? [section.items indexOfObject:self.item] : section.items.count;
     for (NSInteger i = indexInSection - 1; i >= 0; i--) {
-        DistTableViewItem *item = section.items[i];
-        if ([item isKindOfClass:[DistTableViewItem class]]) {
+        RETableViewItem *item = section.items[i];
+        if ([item isKindOfClass:[RETableViewItem class]]) {
             Class class = [self.tableViewManager classForCellAtIndexPath:item.indexPath];
             if ([class canFocusWithItem:item])
                 return [NSIndexPath indexPathForRow:i inSection:sectionIndex];
@@ -221,11 +221,11 @@
 
 - (NSIndexPath *)indexPathForNextResponderInSectionIndex:(NSUInteger)sectionIndex
 {
-    DistTableViewSection *section = self.tableViewManager.sections[sectionIndex];
+    RETableViewSection *section = self.tableViewManager.sections[sectionIndex];
     NSUInteger indexInSection =  [section isEqual:self.section] ? [section.items indexOfObject:self.item] : -1;
     for (NSInteger i = indexInSection + 1; i < section.items.count; i++) {
-        DistTableViewItem *item = section.items[i];
-        if ([item isKindOfClass:[DistTableViewItem class]]) {
+        RETableViewItem *item = section.items[i];
+        if ([item isKindOfClass:[RETableViewItem class]]) {
             Class class = [self.tableViewManager classForCellAtIndexPath:item.indexPath];
             if ([class canFocusWithItem:item])
                 return [NSIndexPath indexPathForRow:i inSection:sectionIndex];

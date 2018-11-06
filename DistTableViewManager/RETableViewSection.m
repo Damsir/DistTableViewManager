@@ -1,6 +1,6 @@
 //
-// DistTableViewSection.m
-// DistTableViewManager
+// RETableViewSection.m
+// RETableViewManager
 //
 // Copyright (c) 2013 Roman Efimov (https://github.com/romaonthego)
 //
@@ -23,19 +23,19 @@
 // THE SOFTWARE.
 //
 
-#import "DistTableViewSection.h"
-#import "DistTableViewManager.h"
+#import "RETableViewSection.h"
+#import "RETableViewManager.h"
 
-CGFloat const DistTableViewSectionHeaderHeightAutomatic = DBL_MAX;
-CGFloat const DistTableViewSectionFooterHeightAutomatic = DBL_MAX;
+CGFloat const RETableViewSectionHeaderHeightAutomatic = DBL_MAX;
+CGFloat const RETableViewSectionFooterHeightAutomatic = DBL_MAX;
 
-@interface DistTableViewSection ()
+@interface RETableViewSection ()
 
 @property (strong, readwrite, nonatomic) NSMutableArray *mutableItems;
 
 @end
 
-@implementation DistTableViewSection
+@implementation RETableViewSection
 
 #pragma mark -
 #pragma mark Creating and Initializing Sections
@@ -72,8 +72,8 @@ CGFloat const DistTableViewSectionFooterHeightAutomatic = DBL_MAX;
         return nil;
     
     _mutableItems = [[NSMutableArray alloc] init];
-    _headerHeight = DistTableViewSectionHeaderHeightAutomatic;
-    _footerHeight = DistTableViewSectionFooterHeightAutomatic;
+    _headerHeight = RETableViewSectionHeaderHeightAutomatic;
+    _footerHeight = RETableViewSectionFooterHeightAutomatic;
     if (@available(iOS 11.0, *)) {
         _headerHeight = 0;
         _footerHeight = 0;
@@ -120,7 +120,7 @@ CGFloat const DistTableViewSectionFooterHeightAutomatic = DBL_MAX;
 #pragma mark -
 #pragma mark Styling
 
-- (DistTableViewCellStyle *)style
+- (RETableViewCellStyle *)style
 {
     return _style ? _style : self.tableViewManager.style;
 }
@@ -130,7 +130,7 @@ CGFloat const DistTableViewSectionFooterHeightAutomatic = DBL_MAX;
 
 - (NSUInteger)index
 {
-    DistTableViewManager *tableViewManager = self.tableViewManager;
+    RETableViewManager *tableViewManager = self.tableViewManager;
     return [tableViewManager.sections indexOfObject:self];
 }
 
@@ -146,34 +146,34 @@ CGFloat const DistTableViewSectionFooterHeightAutomatic = DBL_MAX;
 
 - (void)addItem:(id)item
 {
-    if ([item isKindOfClass:[DistTableViewItem class]])
-        ((DistTableViewItem *)item).section = self;
+    if ([item isKindOfClass:[RETableViewItem class]])
+        ((RETableViewItem *)item).section = self;
     
     [self.mutableItems addObject:item];
 }
 
 - (void)addItemsFromArray:(NSArray *)array
 {
-    for (DistTableViewItem *item in array)
-        if ([item isKindOfClass:[DistTableViewItem class]])
-            ((DistTableViewItem *)item).section = self;
+    for (RETableViewItem *item in array)
+        if ([item isKindOfClass:[RETableViewItem class]])
+            ((RETableViewItem *)item).section = self;
     
     [self.mutableItems addObjectsFromArray:array];
 }
 
 - (void)insertItem:(id)item atIndex:(NSUInteger)index
 {
-    if ([item isKindOfClass:[DistTableViewItem class]])
-        ((DistTableViewItem *)item).section = self;
+    if ([item isKindOfClass:[RETableViewItem class]])
+        ((RETableViewItem *)item).section = self;
     
     [self.mutableItems insertObject:item atIndex:index];
 }
 
 - (void)insertItems:(NSArray *)items atIndexes:(NSIndexSet *)indexes
 {
-    for (DistTableViewItem *item in items)
-        if ([item isKindOfClass:[DistTableViewItem class]])
-            ((DistTableViewItem *)item).section = self;
+    for (RETableViewItem *item in items)
+        if ([item isKindOfClass:[RETableViewItem class]])
+            ((RETableViewItem *)item).section = self;
     
     [self.mutableItems insertObjects:items atIndexes:indexes];
 }
@@ -230,8 +230,8 @@ CGFloat const DistTableViewSectionFooterHeightAutomatic = DBL_MAX;
 
 - (void)replaceItemAtIndex:(NSUInteger)index withItem:(id)item
 {
-    if ([item isKindOfClass:[DistTableViewItem class]])
-        ((DistTableViewItem *)item).section = self;
+    if ([item isKindOfClass:[RETableViewItem class]])
+        ((RETableViewItem *)item).section = self;
     
     [self.mutableItems replaceObjectAtIndex:index withObject:item];
 }
@@ -244,27 +244,27 @@ CGFloat const DistTableViewSectionFooterHeightAutomatic = DBL_MAX;
 
 - (void)replaceItemsInRange:(NSRange)range withItemsFromArray:(NSArray *)otherArray range:(NSRange)otherRange
 {
-    for (DistTableViewItem *item in otherArray)
-        if ([item isKindOfClass:[DistTableViewItem class]])
-            ((DistTableViewItem *)item).section = self;
+    for (RETableViewItem *item in otherArray)
+        if ([item isKindOfClass:[RETableViewItem class]])
+            ((RETableViewItem *)item).section = self;
     
     [self.mutableItems replaceObjectsInRange:range withObjectsFromArray:otherArray range:otherRange];
 }
 
 - (void)replaceItemsInRange:(NSRange)range withItemsFromArray:(NSArray *)otherArray
 {
-    for (DistTableViewItem *item in otherArray)
-        if ([item isKindOfClass:[DistTableViewItem class]])
-            ((DistTableViewItem *)item).section = self;
+    for (RETableViewItem *item in otherArray)
+        if ([item isKindOfClass:[RETableViewItem class]])
+            ((RETableViewItem *)item).section = self;
     
     [self.mutableItems replaceObjectsInRange:range withObjectsFromArray:otherArray];
 }
 
 - (void)replaceItemsAtIndexes:(NSIndexSet *)indexes withItems:(NSArray *)items
 {
-    for (DistTableViewItem *item in items)
-        if ([item isKindOfClass:[DistTableViewItem class]])
-            ((DistTableViewItem *)item).section = self;
+    for (RETableViewItem *item in items)
+        if ([item isKindOfClass:[RETableViewItem class]])
+            ((RETableViewItem *)item).section = self;
     
     [self.mutableItems replaceObjectsAtIndexes:indexes withObjects:items];
 }
@@ -298,7 +298,7 @@ CGFloat const DistTableViewSectionFooterHeightAutomatic = DBL_MAX;
 - (NSArray *)errors
 {
     NSMutableArray *errors;
-    for (DistTableViewItem *item in self.mutableItems) {
+    for (RETableViewItem *item in self.mutableItems) {
         if ([item respondsToSelector:@selector(errors)]) {
             NSArray *itemErrors = item.errors;
             if (itemErrors) {
