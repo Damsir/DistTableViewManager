@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "DistTableViewManager"
-  s.version      = "1.0.1"
+  s.version      = "1.0.0"
   s.summary      = "powerful data driven content manager for UITableView"
   s.author       = { "Damrin" => "75081647@qq.com" }
   s.homepage    = 'https://github.com/Damsir/DistTableViewManager'
